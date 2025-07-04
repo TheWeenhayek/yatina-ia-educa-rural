@@ -110,13 +110,13 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=200&fit=crop'
       }
     ],
-    materials: Object.entries(project.materials || ['LED', 'Resistores', 'Switch']).map(([index, material]) => ({
+    materials: (project.materials || ['LED', 'Resistores', 'Switch']).map((material: string, index: number) => ({
       item: material,
       quantity: '1 por grupo',
       essential: true,
-      description: kitMaterials[material]?.description || 'Componente del kit educativo',
-      image: kitMaterials[material]?.image,
-      specs: kitMaterials[material]?.specs
+      description: (kitMaterials as any)[material]?.description || 'Componente del kit educativo',
+      image: (kitMaterials as any)[material]?.image,
+      specs: (kitMaterials as any)[material]?.specs
     })),
     safetyPractices: [
       'Siempre desconectar la fuente de alimentación antes de modificar conexiones',
@@ -244,7 +244,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                         <p className="text-gray-700 mb-3">{activity.description}</p>
                         <div className="text-sm text-gray-600 mb-2">
                           <span className="font-medium">Materiales: </span>
-                          {activity.materials.join(', ')}
+                          {Array.isArray(activity.materials) ? activity.materials.join(', ') : String(activity.materials)}
                         </div>
                         {activity.safetyNotes && (
                           <div className="flex items-start gap-2 text-sm text-red-600">
@@ -278,28 +278,28 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
             </CardHeader>
             <CardContent>
               <div className="grid gap-6">
-                {generatedPlan.materials.map((material, index) => (
+                {generatedPlan.materials.map((material: any, index: number) => (
                   <div key={index} className="border rounded-lg p-4 bg-gray-50">
                     <div className="grid md:grid-cols-4 gap-4">
                       <div>
                         <img 
                           src={material.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop'} 
-                          alt={material.item}
+                          alt={String(material.item)}
                           className="w-full h-24 object-cover rounded-lg"
                         />
                       </div>
                       <div className="md:col-span-3">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-yatina-text">{material.item}</span>
+                          <span className="font-medium text-yatina-text">{String(material.item)}</span>
                           {material.essential && (
                             <Badge className="bg-yatina-orange text-white text-xs">Esencial</Badge>
                           )}
-                          <span className="text-sm text-gray-600 ml-auto">{material.quantity}</span>
+                          <span className="text-sm text-gray-600 ml-auto">{String(material.quantity)}</span>
                         </div>
-                        <p className="text-sm text-gray-700 mb-2">{material.description}</p>
+                        <p className="text-sm text-gray-700 mb-2">{String(material.description)}</p>
                         {material.specs && (
                           <p className="text-xs text-gray-600 bg-white p-2 rounded">
-                            <span className="font-medium">Especificaciones: </span>{material.specs}
+                            <span className="font-medium">Especificaciones: </span>{String(material.specs)}
                           </p>
                         )}
                       </div>
