@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Clock, Users, AlertTriangle, Lightbulb, Play, Edit, Check } from 'lucide-react';
+import { Clock, Users, AlertTriangle, Lightbulb, Play, Edit, Check, ArrowLeft } from 'lucide-react';
 
 interface LessonPlanProps {
   project: any;
@@ -16,86 +16,146 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
   const [isEditing, setIsEditing] = useState(false);
   const [editedPlan, setEditedPlan] = useState(null);
 
-  // Simulación de plan generado por IA
+  // Materiales del kit con imágenes y descripciones detalladas
+  const kitMaterials = {
+    'Motor': {
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      description: 'Motor DC de 6V que convierte energía eléctrica en movimiento rotatorio. Ideal para bombas de agua y ventiladores.',
+      specs: '6V DC, 100 RPM, bajo consumo'
+    },
+    'Transistores': {
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      description: 'BC548 (NPN) y BC558 (PNP) - Componentes que amplifican señales eléctricas pequeñas para controlar cargas mayores.',
+      specs: 'Corriente máxima: 100mA, Voltaje: 45V'
+    },
+    'Resistores': {
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      description: 'Limitan el flujo de corriente eléctrica. Colores indican su valor: marrón-negro-marrón (100Ω) hasta marrón-negro-naranja (10kΩ).',
+      specs: 'Valores: 100Ω, 470Ω, 1kΩ, 10kΩ'
+    },
+    'Fotoresistor': {
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      description: 'Sensor que cambia su resistencia según la cantidad de luz. A más luz, menor resistencia.',
+      specs: 'Rango: 1kΩ (luz) a 10MΩ (oscuridad)'
+    },
+    'Switch': {
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      description: 'Interruptor que abre o cierra un circuito permanentemente hasta que se accione nuevamente.',
+      specs: 'SPDT, 250V AC / 3A'
+    },
+    'Pulsadores': {
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      description: 'Botones que se activan solo mientras se presionan. Útiles para controles momentáneos.',
+      specs: 'Normalmente abierto, 12V DC'
+    },
+    'LED': {
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      description: 'Diodo emisor de luz que convierte electricidad en luz. Terminal largo es positivo (+).',
+      specs: 'Voltaje: 2-3V, Corriente: 20mA'
+    },
+    'Lámpara': {
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      description: 'Lámpara incandescente pequeña para iluminación de mayor intensidad que el LED.',
+      specs: '6V, 0.5W, rosca pequeña'
+    },
+    'Capacitores': {
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      description: 'Almacenan energía eléctrica temporalmente. 104 (0.1µF), 470µF y 1000µF para diferentes aplicaciones.',
+      specs: '104: cerámico, 470µF/1000µF: electrolíticos'
+    },
+    'Potenciómetro': {
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      description: 'Resistencia variable de 100kΩ. Permite ajustar la resistencia girando un eje.',
+      specs: '100kΩ lineal, 3 terminales'
+    }
+  };
+
+  // Simulación de plan generado por IA con imágenes
   const generatedPlan = {
     project: project,
-    totalDuration: project.duration,
-    estimatedStudents: project.studentsRequired,
-    kitAvailable: project.kitRequired,
+    totalDuration: project.duration || '60 minutos',
+    estimatedStudents: project.studentsRequired || '12-15 estudiantes',
+    kitAvailable: true,
     schedule: [
       {
         time: '0-10 min',
-        activity: 'Introducción al Tema',
-        description: 'Presentación del proyecto y conceptos básicos de electrónica',
-        materials: ['Proyector', 'Presentación digital'],
-        safetyNotes: 'Verificar que todos los estudiantes estén atentos'
+        activity: 'Introducción al Proyecto Rural',
+        description: `Presentación del proyecto "${project.name}" y su importancia para la comunidad rural`,
+        materials: ['Proyector', 'Presentación digital', 'Imágenes del contexto rural'],
+        safetyNotes: 'Verificar que todos los estudiantes estén atentos y participando',
+        image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=300&h=200&fit=crop'
       },
       {
-        time: '10-20 min',
-        activity: 'Presentación de Materiales',
-        description: 'Mostrar y explicar cada componente del circuito',
-        materials: ['Kit de electrónica', 'Componentes individuales'],
-        safetyNotes: 'Explicar el manejo seguro de cada componente'
+        time: '10-25 min',
+        activity: 'Presentación de Materiales del Kit',
+        description: 'Mostrar cada componente, explicar su función y cómo se relaciona con el proyecto rural',
+        materials: project.materials || ['Kit completo', 'Componentes individuales'],
+        safetyNotes: 'Explicar el manejo seguro de cada componente, especialmente transistores y capacitores',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&h=200&fit=crop'
       },
       {
-        time: '20-40 min',
-        activity: 'Construcción Práctica',
-        description: 'Armado paso a paso del circuito con supervisión',
-        materials: ['Protoboard', 'LEDs', 'Resistencias', 'Cables'],
-        safetyNotes: 'Supervisar conexiones, verificar polaridad'
+        time: '25-50 min',
+        activity: 'Construcción Práctica del Proyecto',
+        description: 'Armado paso a paso del dispositivo con supervisión continua del docente',
+        materials: project.materials || ['Todos los componentes del kit'],
+        safetyNotes: 'Supervisar conexiones, verificar polaridad, evitar cortocircuitos',
+        image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=300&h=200&fit=crop'
       },
       {
-        time: '40-50 min',
-        activity: 'Validación y Cierre',
-        description: 'Prueba de funcionamiento y reflexión sobre el aprendizaje',
-        materials: ['Baterías', 'Multímetro'],
-        safetyNotes: 'Desconectar baterías al finalizar'
+        time: '50-60 min',
+        activity: 'Prueba y Reflexión Rural',
+        description: 'Prueba de funcionamiento y reflexión sobre cómo aplicar el proyecto en la comunidad',
+        materials: ['Baterías', 'Multímetro (si disponible)'],
+        safetyNotes: 'Desconectar fuentes de alimentación al finalizar, guardar componentes ordenadamente',
+        image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=200&fit=crop'
       }
     ],
-    materials: [
-      { item: 'LEDs (varios colores)', quantity: '1 por estudiante', essential: true },
-      { item: 'Resistencias 220Ω', quantity: '1 por estudiante', essential: true },
-      { item: 'Protoboard pequeña', quantity: '1 por grupo', essential: true },
-      { item: 'Cables de conexión', quantity: '4 por grupo', essential: true },
-      { item: 'Batería 9V', quantity: '1 por grupo', essential: true },
-      { item: 'Multímetro', quantity: '1 por aula', essential: false }
-    ],
+    materials: Object.entries(project.materials || ['LED', 'Resistores', 'Switch']).map(([index, material]) => ({
+      item: material,
+      quantity: '1 por grupo',
+      essential: true,
+      description: kitMaterials[material]?.description || 'Componente del kit educativo',
+      image: kitMaterials[material]?.image,
+      specs: kitMaterials[material]?.specs
+    })),
     safetyPractices: [
       'Siempre desconectar la fuente de alimentación antes de modificar conexiones',
-      'Verificar la polaridad de los componentes antes de conectar',
-      'Mantener el área de trabajo limpia y ordenada',
-      'No tocar conexiones con las manos húmedas',
-      'Informar inmediatamente cualquier olor extraño o chispa'
+      'Verificar la polaridad de componentes (LED, capacitores electrolíticos) antes de conectar',
+      'Mantener el área de trabajo limpia y componentes organizados',
+      'No tocar conexiones con las manos húmedas o sucias',
+      'Informar inmediatamente cualquier olor extraño, chispa o calentamiento excesivo',
+      'Trabajar en grupos pequeños con supervisión constante del docente'
     ],
     pedagogicalRecommendations: [
       'Formar grupos de 2-3 estudiantes para fomentar el trabajo colaborativo',
-      'Realizar preguntas guía durante la construcción para verificar comprensión',
-      'Conectar el proyecto con aplicaciones del mundo real',
-      'Documentar el proceso con fotos para crear un portafolio',
-      'Asignar roles específicos dentro de cada grupo'
+      'Conectar cada paso con aplicaciones reales en agricultura/minería local',
+      'Realizar preguntas guía: "¿Cómo ayudaría esto en tu comunidad?"',
+      'Documentar el proceso con dibujos o fotos para crear un portafolio rural',
+      'Asignar roles: constructor, verificador, documentador',
+      'Relacionar el proyecto con saberes ancestrales y tecnología moderna'
     ],
     embeddedVideos: [
       {
-        title: 'Introducción a los LEDs',
+        title: 'Fundamentos de Electrónica Rural',
         url: 'https://youtu.be/vFV46tUKOHg?si=3TnksI--4DoT12Hw',
-        description: 'Video explicativo sobre el funcionamiento básico de los diodos LED'
+        description: 'Conceptos básicos de electrónica aplicados al contexto rural'
       },
       {
-        title: 'Seguridad en Electrónica',
+        title: 'Seguridad en Proyectos Electrónicos',
         url: 'https://youtu.be/YSwRCbMBG6M?si=BtdMfftWSJOKj3rx',
-        description: 'Buenas prácticas de seguridad para proyectos electrónicos'
+        description: 'Buenas prácticas de seguridad para el manejo de componentes'
       }
     ],
     additionalResources: [
       {
-        type: 'Artículo',
-        title: 'Fundamentos de Circuitos Eléctricos',
-        description: 'Guía completa sobre conceptos básicos de electricidad'
+        type: 'Guía PDF',
+        title: 'Manual de Componentes Electrónicos',
+        description: 'Guía visual con descripción detallada de cada componente del kit'
       },
       {
-        type: 'Simulador',
-        title: 'Tinkercad Circuits',
-        description: 'Herramienta online para simular circuitos electrónicos'
+        type: 'Video Tutorial',
+        title: 'Aplicaciones Rurales de la Electrónica',
+        description: 'Ejemplos de proyectos electrónicos exitosos en comunidades rurales'
       }
     ]
   };
@@ -107,7 +167,6 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
 
   const handleSaveEdit = () => {
     setIsEditing(false);
-    // Aquí guardarías los cambios
   };
 
   const handleAssign = () => {
@@ -122,7 +181,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
           <h2 className="text-2xl font-montserrat font-bold text-yatina-text mb-2">
             Plan de Clase: {project.name}
           </h2>
-          <div className="flex gap-4 text-sm text-gray-600">
+          <div className="flex gap-4 text-sm text-gray-600 mb-2">
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
               {generatedPlan.totalDuration}
@@ -131,16 +190,13 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
               <Users className="w-4 h-4" />
               {generatedPlan.estimatedStudents}
             </div>
-            <Badge variant={generatedPlan.kitAvailable ? "default" : "secondary"}>
-              {generatedPlan.kitAvailable ? "Kit Requerido" : "Sin Kit"}
-            </Badge>
           </div>
+          <Badge className="bg-green-600 text-white">
+            🌾 Enfoque Rural: {project.ruralFocus}
+          </Badge>
         </div>
         
         <div className="flex gap-3">
-          <Button variant="outline" onClick={onBack}>
-            Volver
-          </Button>
           {!isEditing ? (
             <Button variant="outline" onClick={handleEdit} className="flex items-center gap-2">
               <Edit className="w-4 h-4" />
@@ -176,24 +232,35 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {generatedPlan.schedule.map((activity, index) => (
-                  <div key={index} className="border-l-4 border-yatina-blue pl-4 py-2">
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-semibold text-yatina-text">{activity.activity}</h4>
-                      <Badge variant="outline">{activity.time}</Badge>
-                    </div>
-                    <p className="text-gray-700 mb-2">{activity.description}</p>
-                    <div className="text-sm text-gray-600">
-                      <span className="font-medium">Materiales: </span>
-                      {activity.materials.join(', ')}
-                    </div>
-                    {activity.safetyNotes && (
-                      <div className="flex items-start gap-2 mt-2 text-sm text-red-600">
-                        <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                        {activity.safetyNotes}
+                  <div key={index} className="border-l-4 border-yatina-blue pl-6 py-4">
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div className="md:col-span-2">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="font-semibold text-yatina-text">{activity.activity}</h4>
+                          <Badge variant="outline">{activity.time}</Badge>
+                        </div>
+                        <p className="text-gray-700 mb-3">{activity.description}</p>
+                        <div className="text-sm text-gray-600 mb-2">
+                          <span className="font-medium">Materiales: </span>
+                          {activity.materials.join(', ')}
+                        </div>
+                        {activity.safetyNotes && (
+                          <div className="flex items-start gap-2 text-sm text-red-600">
+                            <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                            {activity.safetyNotes}
+                          </div>
+                        )}
                       </div>
-                    )}
+                      <div>
+                        <img 
+                          src={activity.image} 
+                          alt={activity.activity}
+                          className="w-full h-32 object-cover rounded-lg"
+                        />
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -204,22 +271,39 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         <TabsContent value="materials" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Lista de Materiales</CardTitle>
+              <CardTitle>Kit de Materiales con Imágenes</CardTitle>
               <CardDescription>
-                Materiales necesarios ajustados al contexto y número de estudiantes
+                Componentes del kit educativo con descripciones detalladas y especificaciones
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
+              <div className="grid gap-6">
                 {generatedPlan.materials.map((material, index) => (
-                  <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <span className="font-medium text-yatina-text">{material.item}</span>
-                      {material.essential && (
-                        <Badge className="ml-2 bg-yatina-orange text-white text-xs">Esencial</Badge>
-                      )}
+                  <div key={index} className="border rounded-lg p-4 bg-gray-50">
+                    <div className="grid md:grid-cols-4 gap-4">
+                      <div>
+                        <img 
+                          src={material.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop'} 
+                          alt={material.item}
+                          className="w-full h-24 object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="md:col-span-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="font-medium text-yatina-text">{material.item}</span>
+                          {material.essential && (
+                            <Badge className="bg-yatina-orange text-white text-xs">Esencial</Badge>
+                          )}
+                          <span className="text-sm text-gray-600 ml-auto">{material.quantity}</span>
+                        </div>
+                        <p className="text-sm text-gray-700 mb-2">{material.description}</p>
+                        {material.specs && (
+                          <p className="text-xs text-gray-600 bg-white p-2 rounded">
+                            <span className="font-medium">Especificaciones: </span>{material.specs}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                    <span className="text-sm text-gray-600">{material.quantity}</span>
                   </div>
                 ))}
               </div>
@@ -250,7 +334,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h4 className="flex items-center gap-2 font-semibold text-yatina-text mb-2">
                   <Lightbulb className="w-4 h-4 text-yatina-orange" />
-                  Recomendaciones Pedagógicas
+                  Recomendaciones Pedagógicas Rurales
                 </h4>
                 <ul className="space-y-2">
                   {generatedPlan.pedagogicalRecommendations.map((rec, index) => (

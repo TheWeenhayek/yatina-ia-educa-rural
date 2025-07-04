@@ -3,18 +3,19 @@ import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen, Users, LogOut, Cpu } from 'lucide-react';
+import { BookOpen, Users, LogOut, Cpu, ArrowLeft, Calendar } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import ProjectSuggestions from './ProjectSuggestions';
+import TrimesterSelection from './TrimesterSelection';
+import SyllabusView from './SyllabusView';
 import DetailedLessonPlan from './DetailedLessonPlan';
 
 const DocenteDashboard = () => {
   const { user, logout } = useAuth();
   const [selectedGrade, setSelectedGrade] = useState<string>('');
+  const [selectedTrimester, setSelectedTrimester] = useState<number | null>(null);
   const [selectedProject, setSelectedProject] = useState<any>(null);
-  const [generatedPlan, setGeneratedPlan] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [currentView, setCurrentView] = useState<'grades' | 'projects' | 'plan'>('grades');
+  const [currentView, setCurrentView] = useState<'grades' | 'trimesters' | 'syllabus' | 'plan'>('grades');
 
   const grades = [
     '1ro Secundaria', '2do Secundaria', '3ro Secundaria',
@@ -23,10 +24,19 @@ const DocenteDashboard = () => {
 
   const selectGrade = (grade: string) => {
     setSelectedGrade(grade);
-    setCurrentView('projects');
+    setCurrentView('trimesters');
     toast({
       title: "Grado seleccionado",
-      description: `Mostrando proyectos para ${grade}`,
+      description: `Mostrando trimestres para ${grade}`,
+    });
+  };
+
+  const selectTrimester = (trimester: number) => {
+    setSelectedTrimester(trimester);
+    setCurrentView('syllabus');
+    toast({
+      title: "Trimestre seleccionado",
+      description: `Mostrando temario del ${trimester}° trimestre`,
     });
   };
 
@@ -53,14 +63,16 @@ const DocenteDashboard = () => {
     // Resetear al inicio
     setCurrentView('grades');
     setSelectedGrade('');
+    setSelectedTrimester(null);
     setSelectedProject(null);
-    setGeneratedPlan(null);
   };
 
   const goBack = () => {
     if (currentView === 'plan') {
-      setCurrentView('projects');
-    } else if (currentView === 'projects') {
+      setCurrentView('syllabus');
+    } else if (currentView === 'syllabus') {
+      setCurrentView('trimesters');
+    } else if (currentView === 'trimesters') {
       setCurrentView('grades');
       setSelectedGrade('');
     }
@@ -102,6 +114,18 @@ const DocenteDashboard = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Back Button */}
+        {currentView !== 'grades' && (
+          <Button
+            variant="ghost"
+            onClick={goBack}
+            className="mb-6 flex items-center gap-2 text-yatina-text hover:bg-yatina-orange/10"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Volver
+          </Button>
+        )}
+
         {currentView === 'grades' && (
           <div className="space-y-8">
             {/* Welcome Section */}
@@ -135,7 +159,7 @@ const DocenteDashboard = () => {
                     </CardHeader>
                     <CardContent className="text-center pt-0">
                       <p className="text-sm text-gray-600">
-                        Ver proyectos disponibles
+                        Ver trimestres disponibles
                       </p>
                     </CardContent>
                   </Card>
@@ -145,9 +169,17 @@ const DocenteDashboard = () => {
           </div>
         )}
 
-        {currentView === 'projects' && (
-          <ProjectSuggestions 
-            grade={selectedGrade} 
+        {currentView === 'trimesters' && (
+          <TrimesterSelection 
+            grade={selectedGrade}
+            onSelectTrimester={selectTrimester}
+          />
+        )}
+
+        {currentView === 'syllabus' && selectedTrimester && (
+          <SyllabusView 
+            grade={selectedGrade}
+            trimester={selectedTrimester}
             onSelectProject={selectProject}
           />
         )}

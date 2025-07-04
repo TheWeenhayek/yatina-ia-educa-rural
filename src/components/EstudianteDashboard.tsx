@@ -2,7 +2,7 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { BookOpen, LogOut } from 'lucide-react';
+import { BookOpen, LogOut, ArrowLeft } from 'lucide-react';
 import InteractiveProjectView from './InteractiveProjectView';
 
 const EstudianteDashboard = () => {
@@ -49,7 +49,7 @@ const EstudianteDashboard = () => {
             ¡Hola, {user?.nombre?.split(' ')[0]}!
           </h2>
           <p className="text-gray-600">
-            Tu profesor te ha asignado un proyecto emocionante. ¡Vamos a aprender construyendo!
+            Tu profesor te ha asignado un proyecto emocionante. ¡Vamos a aprender construyendo para nuestra comunidad!
           </p>
         </div>
 
