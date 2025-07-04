@@ -1,14 +1,26 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import Login from '../components/Login';
+import DocenteDashboard from '../components/DocenteDashboard';
+import EstudianteDashboard from '../components/EstudianteDashboard';
 
 const Index = () => {
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
-  );
+  const { isAuthenticated, user } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
+  if (user?.tipo === 'docente') {
+    return <DocenteDashboard />;
+  }
+
+  if (user?.tipo === 'estudiante') {
+    return <EstudianteDashboard />;
+  }
+
+  return <Login />;
 };
 
 export default Index;
