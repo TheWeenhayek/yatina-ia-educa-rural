@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Clock, Users, AlertTriangle, Lightbulb, Play, Edit, Check, ArrowLeft } from 'lucide-react';
+import { Clock, Users, AlertTriangle, Lightbulb, Play, Edit, Check, ArrowLeft, MapPin } from 'lucide-react';
 
 interface LessonPlanProps {
   project: any;
@@ -70,7 +69,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
     }
   };
 
-  // Simulación de plan generado por IA con imágenes
+  // Simulación de plan generado por IA con pasos más detallados
   const generatedPlan = {
     project: project,
     totalDuration: project.duration || '60 minutos',
@@ -99,7 +98,57 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         description: 'Armado paso a paso del dispositivo con supervisión continua del docente',
         materials: project.materials || ['Todos los componentes del kit'],
         safetyNotes: 'Supervisar conexiones, verificar polaridad, evitar cortocircuitos',
-        image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=300&h=200&fit=crop'
+        image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=300&h=200&fit=crop',
+        detailedSteps: [
+          {
+            step: 1,
+            title: 'Preparación del área de trabajo',
+            description: 'Organizar todos los componentes en la mesa de trabajo',
+            materials: ['Todos los componentes del kit', 'Mesa limpia', 'Buena iluminación'],
+            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&h=150&fit=crop',
+            safety: 'Verificar que no haya humedad en el área de trabajo'
+          },
+          {
+            step: 2,
+            title: 'Identificación de componentes',
+            description: 'Reconocer cada componente y verificar su estado',
+            materials: project.materials || ['LED', 'Resistor 220Ω', 'Cables', 'Batería 9V'],
+            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&h=150&fit=crop',
+            safety: 'Verificar que no haya componentes dañados'
+          },
+          {
+            step: 3,
+            title: 'Primera conexión: LED y resistor',
+            description: 'Conectar la pata larga del LED (positiva) con un extremo del resistor',
+            materials: ['LED', 'Resistor 220Ω', 'Cable corto'],
+            image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=200&h=150&fit=crop',
+            safety: 'IMPORTANTE: La pata larga del LED es el terminal positivo (+)'
+          },
+          {
+            step: 4,
+            title: 'Conexión a la fuente positiva',
+            description: 'Conectar el extremo libre del resistor al terminal positivo de la batería',
+            materials: ['Cable rojo', 'Terminal positivo de batería'],
+            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&h=150&fit=crop',
+            safety: 'Verificar que el cable esté bien conectado al terminal positivo'
+          },
+          {
+            step: 5,
+            title: 'Completar el circuito',
+            description: 'Conectar la pata corta del LED al terminal negativo de la batería',
+            materials: ['Cable negro', 'Terminal negativo de batería'],
+            image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=200&h=150&fit=crop',
+            safety: 'El LED debe encenderse. Si no lo hace, verificar todas las conexiones'
+          },
+          {
+            step: 6,
+            title: 'Prueba y verificación',
+            description: 'Verificar el funcionamiento correcto del circuito',
+            materials: ['Circuito completo'],
+            image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=200&h=150&fit=crop',
+            safety: 'Si hay chispas o calentamiento, desconectar inmediatamente'
+          }
+        ]
       },
       {
         time: '50-60 min',
@@ -133,6 +182,32 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
       'Documentar el proceso con dibujos o fotos para crear un portafolio rural',
       'Asignar roles: constructor, verificador, documentador',
       'Relacionar el proyecto con saberes ancestrales y tecnología moderna'
+    ],
+    ruralApplications: [
+      {
+        title: 'Señalización de Riesgo en Maquinaria Agrícola',
+        description: 'Los LEDs pueden utilizarse para crear luces de advertencia en tractores y cosechadoras, alertando sobre peligros durante el trabajo nocturno.',
+        image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=300&h=200&fit=crop',
+        benefit: 'Reduce accidentes laborales en un 40% según estudios rurales'
+      },
+      {
+        title: 'Iluminación de Bajo Consumo en Establos',
+        description: 'Sistema de LEDs alimentado por baterías para proporcionar luz durante el ordeño matutino sin necesidad de electricidad comercial.',
+        image: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=300&h=200&fit=crop',
+        benefit: 'Mejora la productividad lechera al facilitar el trabajo temprano'
+      },
+      {
+        title: 'Indicadores para Sistemas de Riego',
+        description: 'LEDs que se encienden para mostrar el estado de funcionamiento de bombas de agua y sistemas de riego automatizados.',
+        image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=200&fit=crop',
+        benefit: 'Permite monitoreo visual inmediato del sistema desde la distancia'
+      },
+      {
+        title: 'Detectores Básicos para Minería Artesanal',
+        description: 'Circuitos simples con LEDs que ayudan a detectar la presencia de metales en vetas superficiales usando principios electromagnéticos básicos.',
+        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&h=200&fit=crop',
+        benefit: 'Herramienta económica para prospección inicial responsable'
+      }
     ],
     embeddedVideos: [
       {
@@ -175,25 +250,35 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header */}
+      {/* Header con botón de volver */}
       <div className="flex justify-between items-start">
-        <div>
-          <h2 className="text-2xl font-montserrat font-bold text-yatina-text mb-2">
-            Plan de Clase: {project.name}
-          </h2>
-          <div className="flex gap-4 text-sm text-gray-600 mb-2">
-            <div className="flex items-center gap-1">
-              <Clock className="w-4 h-4" />
-              {generatedPlan.totalDuration}
+        <div className="flex items-start gap-4">
+          <Button 
+            variant="outline" 
+            onClick={onBack}
+            className="flex items-center gap-2 shrink-0"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Volver
+          </Button>
+          <div>
+            <h2 className="text-2xl font-montserrat font-bold text-yatina-text mb-2">
+              Plan de Clase: {project.name}
+            </h2>
+            <div className="flex gap-4 text-sm text-gray-600 mb-2">
+              <div className="flex items-center gap-1">
+                <Clock className="w-4 h-4" />
+                {generatedPlan.totalDuration}
+              </div>
+              <div className="flex items-center gap-1">
+                <Users className="w-4 h-4" />
+                {generatedPlan.estimatedStudents}
+              </div>
             </div>
-            <div className="flex items-center gap-1">
-              <Users className="w-4 h-4" />
-              {generatedPlan.estimatedStudents}
-            </div>
+            <Badge className="bg-green-600 text-white">
+              🌾 Enfoque Rural: {project.ruralFocus}
+            </Badge>
           </div>
-          <Badge className="bg-green-600 text-white">
-            🌾 Enfoque Rural: {project.ruralFocus}
-          </Badge>
         </div>
         
         <div className="flex gap-3">
@@ -215,10 +300,11 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
       </div>
 
       <Tabs defaultValue="schedule" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="schedule">Cronograma</TabsTrigger>
           <TabsTrigger value="materials">Materiales</TabsTrigger>
           <TabsTrigger value="safety">Seguridad</TabsTrigger>
+          <TabsTrigger value="rural">Aplicaciones</TabsTrigger>
           <TabsTrigger value="videos">Videos</TabsTrigger>
           <TabsTrigger value="resources">Recursos</TabsTrigger>
         </TabsList>
@@ -250,6 +336,48 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                           <div className="flex items-start gap-2 text-sm text-red-600">
                             <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                             {activity.safetyNotes}
+                          </div>
+                        )}
+
+                        {/* Pasos detallados para construcción práctica */}
+                        {activity.detailedSteps && (
+                          <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                            <h5 className="font-semibold text-yatina-text mb-3 flex items-center gap-2">
+                              <Lightbulb className="w-4 h-4" />
+                              Pasos Detallados de Construcción
+                            </h5>
+                            <div className="space-y-4">
+                              {activity.detailedSteps.map((step: any, stepIndex: number) => (
+                                <div key={stepIndex} className="bg-white p-3 rounded border-l-4 border-yatina-orange">
+                                  <div className="grid md:grid-cols-4 gap-3">
+                                    <div>
+                                      <img 
+                                        src={step.image} 
+                                        alt={`Paso ${step.step}`}
+                                        className="w-full h-20 object-cover rounded"
+                                      />
+                                    </div>
+                                    <div className="md:col-span-3">
+                                      <div className="flex items-center gap-2 mb-1">
+                                        <Badge className="bg-yatina-orange text-white text-xs">
+                                          Paso {step.step}
+                                        </Badge>
+                                        <span className="font-medium text-sm">{step.title}</span>
+                                      </div>
+                                      <p className="text-xs text-gray-700 mb-2">{step.description}</p>
+                                      <p className="text-xs text-gray-600 mb-1">
+                                        <span className="font-medium">Materiales: </span>
+                                        {step.materials.join(', ')}
+                                      </p>
+                                      <div className="flex items-center gap-1 text-xs text-red-600">
+                                        <AlertTriangle className="w-3 h-3" />
+                                        {step.safety}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -343,6 +471,67 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                       {rec}
                     </li>
                   ))}
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Nueva pestaña de Aplicaciones Rurales */}
+        <TabsContent value="rural" className="space-y-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-green-600" />
+                Aplicaciones en Contexto Rural
+              </CardTitle>
+              <CardDescription>
+                Ejemplos reales de cómo este proyecto se aplica en agricultura y minería
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-6">
+                {generatedPlan.ruralApplications.map((app: any, index: number) => (
+                  <div key={index} className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <div className="grid md:grid-cols-3 gap-4">
+                      <div>
+                        <img 
+                          src={app.image} 
+                          alt={app.title}
+                          className="w-full h-32 object-cover rounded-lg"
+                        />
+                      </div>
+                      <div className="md:col-span-2">
+                        <h4 className="font-semibold text-yatina-text mb-2">{app.title}</h4>
+                        <p className="text-sm text-gray-700 mb-3">{app.description}</p>
+                        <div className="bg-white p-2 rounded">
+                          <span className="text-xs font-medium text-green-700">💡 Beneficio: </span>
+                          <span className="text-xs text-gray-600">{app.benefit}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="mt-6 p-4 bg-yatina-orange/10 rounded-lg">
+                <h4 className="font-semibold text-yatina-text mb-2 flex items-center gap-2">
+                  <span className="text-xl">🌾</span>
+                  ¿Cómo motivar a los estudiantes?
+                </h4>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-yatina-orange rounded-full mt-2 flex-shrink-0"></div>
+                    Relaciona cada componente con herramientas que conocen (ejemplo: "el LED es como una linterna pequeña")
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-yatina-orange rounded-full mt-2 flex-shrink-0"></div>
+                    Pregunta: "¿Dónde podrían usar esto en sus casas o trabajos?"
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <div className="w-2 h-2 bg-yatina-orange rounded-full mt-2 flex-shrink-0"></div>
+                    Conecta con sus experiencias: agricultura familiar, minería local, ganadería
+                  </li>
                 </ul>
               </div>
             </CardContent>

@@ -1,9 +1,9 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Wrench, Lightbulb, Zap, Settings, Flame, Cog } from 'lucide-react';
+import KitComponentModal from './KitComponentModal';
 
 interface SyllabusViewProps {
   grade: string;
@@ -12,17 +12,185 @@ interface SyllabusViewProps {
 }
 
 const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectProject }) => {
-  // Kit educativo disponible
+  const [selectedComponent, setSelectedComponent] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Kit educativo disponible con información detallada
   const availableKit = [
-    { name: 'Motor', icon: '⚙️', description: 'Motor DC para movimiento' },
-    { name: 'Transistores BC548/BC558', icon: '🔌', description: 'Amplificación de señales' },
-    { name: 'Resistores (100Ω-10kΩ)', icon: '⚡', description: 'Control de corriente' },
-    { name: 'Fotoresistor', icon: '💡', description: 'Sensor de luz' },
-    { name: 'Switch y Pulsadores', icon: '🔘', description: 'Control manual' },
-    { name: 'LED y Lámpara', icon: '💡', description: 'Indicadores luminosos' },
-    { name: 'Capacitores', icon: '🔋', description: 'Almacenamiento de energía' },
-    { name: 'Potenciómetro 100k', icon: '🎛️', description: 'Control variable' }
+    { 
+      name: 'Motor', 
+      icon: '⚙️', 
+      description: 'Control de movimiento',
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=400&fit=crop',
+      specs: 'Motor DC de 6V, 100 RPM, bajo consumo de energía',
+      purpose: 'El motor DC convierte energía eléctrica en movimiento rotatorio. Es perfecto para crear bombas de agua, ventiladores y sistemas de movimiento en proyectos agrícolas.',
+      usage: 'Conecta el terminal positivo (+) al polo positivo de la batería y el negativo (-) al negativo. Siempre verifica la polaridad antes de conectar.',
+      safetyTips: [
+        'Verifica siempre la polaridad antes de conectar',
+        'No excedas el voltaje recomendado (6V)',
+        'Desconecta la alimentación antes de manipular',
+        'Mantén los dedos alejados de las partes móviles'
+      ],
+      applications: [
+        'Bomba de agua para riego automático de cultivos',
+        'Ventilador para secado de granos (quinua, cebada)',
+        'Mezclador para preparación de fertilizantes',
+        'Sistema de movimiento para clasificar semillas'
+      ]
+    },
+    { 
+      name: 'Transistores BC548/BC558', 
+      icon: '🔌', 
+      description: 'Amplificación de señales',
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      specs: 'BC548 (NPN) y BC558 (PNP), corriente máxima 100mA, voltaje 45V',
+      purpose: 'Los transistores amplifican señales eléctricas pequeñas para controlar cargas mayores. Son como interruptores controlados electrónicamente.',
+      usage: 'El BC548 tiene tres patitas: colector, base y emisor. Una pequeña corriente en la base controla una corriente mayor entre colector y emisor.',
+      safetyTips: [
+        'Identifica correctamente las patitas antes de conectar',
+        'No apliques voltajes excesivos',
+        'Usa resistencias limitadoras en la base',
+        'Manipula con cuidado, son componentes delicados'
+      ],
+      applications: [
+        'Amplificador para sensores de humedad del suelo',
+        'Control automático de sistemas de riego',
+        'Detector de metales básico para minería',
+        'Interruptor automático para luces solares'
+      ]
+    },
+    { 
+      name: 'Resistores (100Ω-10kΩ)', 
+      icon: '⚡', 
+      description: 'Control de corriente',
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      specs: 'Valores disponibles: 100Ω, 470Ω, 1kΩ, 10kΩ - Potencia 1/4W',
+      purpose: 'Las resistencias limitan el flujo de corriente eléctrica, protegiendo otros componentes y controlando la cantidad de electricidad que pasa por el circuito.',
+      usage: 'Los colores en la resistencia indican su valor. Lee de izquierda a derecha: primer color-segundo color-multiplicador.',
+      safetyTips: [
+        'Identifica el valor correcto usando el código de colores',
+        'No excedas la potencia máxima (1/4W)',
+        'Verifica con multímetro si tienes dudas',
+        'Las resistencias no tienen polaridad'
+      ],
+      applications: [
+        'Limitador de corriente para LEDs indicadores',
+        'Divisor de voltaje para sensores',
+        'Control de velocidad en motores pequeños',
+        'Protección de circuitos sensibles'
+      ]
+    },
+    { 
+      name: 'Fotoresistor', 
+      icon: '💡', 
+      description: 'Sensor de luz',
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=400&fit=crop',
+      specs: 'Rango de resistencia: 1kΩ (luz directa) a 10MΩ (oscuridad total)',
+      purpose: 'El fotoresistor cambia su resistencia según la cantidad de luz que recibe. A más luz, menor resistencia, y viceversa.',
+      usage: 'Se conecta como una resistencia normal, pero su valor cambia con la luz. Úsalo con un divisor de voltaje para crear un sensor.',
+      safetyTips: [
+        'No tiene polaridad, se puede conectar en cualquier dirección',
+        'Protégelo de la humedad excesiva',
+        'Calibra el sensor según las condiciones de luz del lugar',
+        'Combínalo con resistencias fijas para mejor control'
+      ],
+      applications: [
+        'Sistema de alerta temprana para granizo (detecta cambios de luz)',
+        'Control automático de luces en gallineros',
+        'Detector de día/noche para sistemas solares',
+        'Sensor de sombra para invernaderos'
+      ]
+    },
+    { 
+      name: 'Switch y Pulsadores', 
+      icon: '🔘', 
+      description: 'Control manual',
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      specs: 'Switch SPDT 250V AC/3A, Pulsadores normalmente abiertos 12V DC',
+      purpose: 'Los switches mantienen una posición (encendido/apagado), mientras que los pulsadores solo actúan mientras se presionan.',
+      usage: 'El switch tiene 3 terminales: común, normalmente abierto y normalmente cerrado. Los pulsadores tienen 2 terminales.',
+      safetyTips: [
+        'Identifica qué tipo de interruptor necesitas',
+        'No excedas las especificaciones de corriente',
+        'Verifica las conexiones antes de energizar',
+        'Mantén secos los contactos'
+      ],
+      applications: [
+        'Control manual de bombas de riego',
+        'Interruptor de emergencia para maquinaria',
+        'Activación de sistemas de alerta',
+        'Control de iluminación en establos'
+      ]
+    },
+    { 
+      name: 'LED y Lámpara', 
+      icon: '💡', 
+      description: 'Indicadores luminosos',
+      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=400&fit=crop',
+      specs: 'LED: 2-3V, 20mA | Lámpara: 6V, 0.5W con rosca pequeña',
+      purpose: 'Los LEDs y lámparas convierten electricidad en luz. Los LEDs consumen menos energía y duran más tiempo.',
+      usage: 'Los LEDs tienen polaridad: la patita larga es positiva (+). Siempre usa una resistencia limitadora con LEDs.',
+      safetyTips: [
+        'Respeta la polaridad en los LEDs',
+        'Usa siempre resistencia limitadora con LEDs',
+        'No toques las lámparas con las manos sucias',
+        'Desconecta antes de reemplazar componentes'
+      ],
+      applications: [
+        'Indicadores de estado en sistemas de riego',
+        'Iluminación de emergencia en zonas rurales',
+        'Señalización de peligro en maquinaria',
+        'Luces para gallineros (mejora producción de huevos)'
+      ]
+    },
+    { 
+      name: 'Capacitores', 
+      icon: '🔋', 
+      description: 'Almacenamiento de energía',
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      specs: 'Cerámico 104 (0.1µF), Electrolíticos 470µF y 1000µF/16V',
+      purpose: 'Los capacitores almacenan energía eléctrica temporalmente y la liberan cuando es necesario. También filtran el ruido eléctrico.',
+      usage: 'Los capacitores electrolíticos tienen polaridad (+ y -). Los cerámicos no tienen polaridad.',
+      safetyTips: [
+        'Respeta la polaridad en capacitores electrolíticos',
+        'No excedas el voltaje máximo indicado',
+        'Descarga capacitores grandes antes de manipular',
+        'Los capacitores pueden mantener carga aunque esté desconectado'
+      ],
+      applications: [
+        'Filtro de ruido en sistemas de comunicación rural',
+        'Reserva de energía para sistemas intermitentes',
+        'Mejora de arranque en motores pequeños',
+        'Estabilización de voltaje en circuitos'
+      ]
+    },
+    { 
+      name: 'Potenciómetro 100k', 
+      icon: '🎛️', 
+      description: 'Control variable',
+      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      specs: 'Potenciómetro lineal de 100kΩ con 3 terminales',
+      purpose: 'El potenciómetro es una resistencia variable que permite ajustar valores girando un eje. Es como un control de volumen.',
+      usage: 'Tiene 3 terminales: dos extremos (resistencia total) y uno central (cursor móvil). El valor entre extremo y centro varía al girar.',
+      safetyTips: [
+        'No forces el eje más allá de sus límites',
+        'Protégelo del polvo y humedad',
+        'Aplica voltajes apropiados según especificaciones',
+        'Verifica conexiones antes de energizar'
+      ],
+      applications: [
+        'Control de velocidad en ventiladores de secado',
+        'Ajuste de sensibilidad en detectores',
+        'Control de intensidad lumínica',
+        'Regulación de flujo en sistemas de riego'
+      ]
+    }
   ];
+
+  const handleComponentClick = (component: any) => {
+    setSelectedComponent(component);
+    setIsModalOpen(true);
+  };
 
   const getSyllabusData = (trimester: number) => {
     const syllabusData = {
@@ -211,7 +379,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
         </Badge>
       </div>
 
-      {/* Kit Disponible */}
+      {/* Kit Disponible - Ahora clickeable */}
       <Card className="bg-blue-50 border-blue-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-yatina-text">
@@ -219,13 +387,17 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             Kit Educativo Disponible
           </CardTitle>
           <CardDescription>
-            Materiales incluidos en tu kit de electrónica para todos los proyectos
+            Haz clic en cada componente para ver detalles, especificaciones y aplicaciones
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-4 gap-3">
             {availableKit.map((item, index) => (
-              <div key={index} className="flex items-center gap-2 p-2 bg-white rounded-lg">
+              <div 
+                key={index} 
+                className="flex items-center gap-2 p-3 bg-white rounded-lg cursor-pointer hover:shadow-md hover:bg-blue-50 transition-all duration-200 border border-transparent hover:border-yatina-blue/30"
+                onClick={() => handleComponentClick(item)}
+              >
                 <span className="text-lg">{item.icon}</span>
                 <div>
                   <p className="text-xs font-medium text-yatina-text">{item.name}</p>
@@ -234,8 +406,18 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
               </div>
             ))}
           </div>
+          <p className="text-xs text-gray-500 mt-3 text-center">
+            💡 Haz clic en cualquier componente para ver información detallada
+          </p>
         </CardContent>
       </Card>
+
+      {/* Modal para detalles del componente */}
+      <KitComponentModal 
+        component={selectedComponent}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
 
       {/* Temario y Proyectos */}
       <div className="space-y-6">
