@@ -15,55 +15,55 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
   const [isEditing, setIsEditing] = useState(false);
   const [editedPlan, setEditedPlan] = useState(null);
 
-  // Materiales del kit con imágenes y descripciones detalladas
+  // Materiales del kit con imágenes locales y descripciones detalladas
   const kitMaterials = {
     'Motor': {
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      image: '/images/components/motor.jpg',
       description: 'Motor DC de 6V que convierte energía eléctrica en movimiento rotatorio. Ideal para bombas de agua y ventiladores.',
       specs: '6V DC, 100 RPM, bajo consumo'
     },
     'Transistores': {
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      image: '/images/components/transistores.jpg',
       description: 'BC548 (NPN) y BC558 (PNP) - Componentes que amplifican señales eléctricas pequeñas para controlar cargas mayores.',
       specs: 'Corriente máxima: 100mA, Voltaje: 45V'
     },
     'Resistores': {
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      image: '/images/components/resistores.jpg',
       description: 'Limitan el flujo de corriente eléctrica. Colores indican su valor: marrón-negro-marrón (100Ω) hasta marrón-negro-naranja (10kΩ).',
       specs: 'Valores: 100Ω, 470Ω, 1kΩ, 10kΩ'
     },
     'Fotoresistor': {
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      image: '/images/components/fotoresistor.jpg',
       description: 'Sensor que cambia su resistencia según la cantidad de luz. A más luz, menor resistencia.',
       specs: 'Rango: 1kΩ (luz) a 10MΩ (oscuridad)'
     },
     'Switch': {
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      image: '/images/components/switches.jpg',
       description: 'Interruptor que abre o cierra un circuito permanentemente hasta que se accione nuevamente.',
       specs: 'SPDT, 250V AC / 3A'
     },
     'Pulsadores': {
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      image: '/images/components/switches.jpg',
       description: 'Botones que se activan solo mientras se presionan. Útiles para controles momentáneos.',
       specs: 'Normalmente abierto, 12V DC'
     },
     'LED': {
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      image: '/images/components/led.jpg',
       description: 'Diodo emisor de luz que convierte electricidad en luz. Terminal largo es positivo (+).',
       specs: 'Voltaje: 2-3V, Corriente: 20mA'
     },
     'Lámpara': {
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=150&h=150&fit=crop',
+      image: '/images/components/led.jpg',
       description: 'Lámpara incandescente pequeña para iluminación de mayor intensidad que el LED.',
       specs: '6V, 0.5W, rosca pequeña'
     },
     'Capacitores': {
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      image: '/images/components/capacitores.jpg',
       description: 'Almacenan energía eléctrica temporalmente. 104 (0.1µF), 470µF y 1000µF para diferentes aplicaciones.',
       specs: '104: cerámico, 470µF/1000µF: electrolíticos'
     },
     'Potenciómetro': {
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop',
+      image: '/images/components/potenciometro.jpg',
       description: 'Resistencia variable de 100kΩ. Permite ajustar la resistencia girando un eje.',
       specs: '100kΩ lineal, 3 terminales'
     }
@@ -82,7 +82,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         description: `Presentación del proyecto "${project.name}" y su importancia para la comunidad rural`,
         materials: ['Proyector', 'Presentación digital', 'Imágenes del contexto rural'],
         safetyNotes: 'Verificar que todos los estudiantes estén atentos y participando',
-        image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=300&h=200&fit=crop'
+        image: '/images/rural/agricultura.jpg'
       },
       {
         time: '10-25 min',
@@ -90,7 +90,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         description: 'Mostrar cada componente, explicar su función y cómo se relaciona con el proyecto rural',
         materials: project.materials || ['Kit completo', 'Componentes individuales'],
         safetyNotes: 'Explicar el manejo seguro de cada componente, especialmente transistores y capacitores',
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&h=200&fit=crop'
+        image: '/images/components/kit-completo.jpg'
       },
       {
         time: '25-50 min',
@@ -98,14 +98,14 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         description: 'Armado paso a paso del dispositivo con supervisión continua del docente',
         materials: project.materials || ['Todos los componentes del kit'],
         safetyNotes: 'Supervisar conexiones, verificar polaridad, evitar cortocircuitos',
-        image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=300&h=200&fit=crop',
+        image: '/images/steps/construccion.jpg',
         detailedSteps: [
           {
             step: 1,
             title: 'Preparación del área de trabajo',
             description: 'Organizar todos los componentes en la mesa de trabajo',
             materials: ['Todos los componentes del kit', 'Mesa limpia', 'Buena iluminación'],
-            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&h=150&fit=crop',
+            image: '/images/steps/preparacion.jpg',
             safety: 'Verificar que no haya humedad en el área de trabajo'
           },
           {
@@ -113,7 +113,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
             title: 'Identificación de componentes',
             description: 'Reconocer cada componente y verificar su estado',
             materials: project.materials || ['LED', 'Resistor 220Ω', 'Cables', 'Batería 9V'],
-            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&h=150&fit=crop',
+            image: '/images/steps/identificacion.jpg',
             safety: 'Verificar que no haya componentes dañados'
           },
           {
@@ -121,7 +121,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
             title: 'Primera conexión: LED y resistor',
             description: 'Conectar la pata larga del LED (positiva) con un extremo del resistor',
             materials: ['LED', 'Resistor 220Ω', 'Cable corto'],
-            image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=200&h=150&fit=crop',
+            image: '/images/steps/conexion-led.jpg',
             safety: 'IMPORTANTE: La pata larga del LED es el terminal positivo (+)'
           },
           {
@@ -129,7 +129,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
             title: 'Conexión a la fuente positiva',
             description: 'Conectar el extremo libre del resistor al terminal positivo de la batería',
             materials: ['Cable rojo', 'Terminal positivo de batería'],
-            image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=200&h=150&fit=crop',
+            image: '/images/steps/conexion-positiva.jpg',
             safety: 'Verificar que el cable esté bien conectado al terminal positivo'
           },
           {
@@ -137,7 +137,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
             title: 'Completar el circuito',
             description: 'Conectar la pata corta del LED al terminal negativo de la batería',
             materials: ['Cable negro', 'Terminal negativo de batería'],
-            image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=200&h=150&fit=crop',
+            image: '/images/steps/circuito-completo.jpg',
             safety: 'El LED debe encenderse. Si no lo hace, verificar todas las conexiones'
           },
           {
@@ -145,7 +145,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
             title: 'Prueba y verificación',
             description: 'Verificar el funcionamiento correcto del circuito',
             materials: ['Circuito completo'],
-            image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=200&h=150&fit=crop',
+            image: '/images/steps/prueba.jpg',
             safety: 'Si hay chispas o calentamiento, desconectar inmediatamente'
           }
         ]
@@ -156,7 +156,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         description: 'Prueba de funcionamiento y reflexión sobre cómo aplicar el proyecto en la comunidad',
         materials: ['Baterías', 'Multímetro (si disponible)'],
         safetyNotes: 'Desconectar fuentes de alimentación al finalizar, guardar componentes ordenadamente',
-        image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=200&fit=crop'
+        image: '/images/rural/reflexion.jpg'
       }
     ],
     materials: (project.materials || ['LED', 'Resistores', 'Switch']).map((material: string, index: number) => ({
@@ -164,7 +164,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
       quantity: '1 por grupo',
       essential: true,
       description: (kitMaterials as any)[material]?.description || 'Componente del kit educativo',
-      image: (kitMaterials as any)[material]?.image,
+      image: (kitMaterials as any)[material]?.image || '/images/components/default.jpg',
       specs: (kitMaterials as any)[material]?.specs
     })),
     safetyPractices: [
@@ -187,25 +187,25 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
       {
         title: 'Señalización de Riesgo en Maquinaria Agrícola',
         description: 'Los LEDs pueden utilizarse para crear luces de advertencia en tractores y cosechadoras, alertando sobre peligros durante el trabajo nocturno.',
-        image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=300&h=200&fit=crop',
+        image: '/images/rural/maquinaria.jpg',
         benefit: 'Reduce accidentes laborales en un 40% según estudios rurales'
       },
       {
         title: 'Iluminación de Bajo Consumo en Establos',
         description: 'Sistema de LEDs alimentado por baterías para proporcionar luz durante el ordeño matutino sin necesidad de electricidad comercial.',
-        image: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=300&h=200&fit=crop',
+        image: '/images/rural/establo.jpg',
         benefit: 'Mejora la productividad lechera al facilitar el trabajo temprano'
       },
       {
         title: 'Indicadores para Sistemas de Riego',
         description: 'LEDs que se encienden para mostrar el estado de funcionamiento de bombas de agua y sistemas de riego automatizados.',
-        image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=300&h=200&fit=crop',
+        image: '/images/rural/riego.jpg',
         benefit: 'Permite monitoreo visual inmediato del sistema desde la distancia'
       },
       {
         title: 'Detectores Básicos para Minería Artesanal',
         description: 'Circuitos simples con LEDs que ayudan a detectar la presencia de metales en vetas superficiales usando principios electromagnéticos básicos.',
-        image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&h=200&fit=crop',
+        image: '/images/rural/mineria.jpg',
         benefit: 'Herramienta económica para prospección inicial responsable'
       }
     ],
@@ -250,7 +250,6 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Header con botón de volver */}
       <div className="flex justify-between items-start">
         <div className="flex items-start gap-4">
           <Button 
@@ -339,7 +338,6 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                           </div>
                         )}
 
-                        {/* Pasos detallados para construcción práctica */}
                         {activity.detailedSteps && (
                           <div className="mt-4 p-4 bg-blue-50 rounded-lg">
                             <h5 className="font-semibold text-yatina-text mb-3 flex items-center gap-2">
@@ -411,7 +409,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                     <div className="grid md:grid-cols-4 gap-4">
                       <div>
                         <img 
-                          src={material.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=150&h=150&fit=crop'} 
+                          src={material.image} 
                           alt={String(material.item)}
                           className="w-full h-24 object-cover rounded-lg"
                         />
@@ -477,7 +475,6 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
           </Card>
         </TabsContent>
 
-        {/* Nueva pestaña de Aplicaciones Rurales */}
         <TabsContent value="rural" className="space-y-4">
           <Card>
             <CardHeader>

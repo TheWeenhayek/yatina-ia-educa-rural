@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,7 +23,7 @@ const InteractiveProjectView: React.FC<InteractiveProjectViewProps> = ({ user })
     introduction: {
       title: 'Introducción Visual Interactiva',
       content: 'En este proyecto aprenderás sobre circuitos eléctricos básicos. Un circuito es como un camino por donde viaja la electricidad, y nosotros vamos a crear uno que encienda una luz LED.',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop',
+      image: '/images/projects/circuito-led-intro.jpg',
       keyPoints: [
         'Los electrones se mueven a través de cables conductores',
         'Las resistencias controlan el flujo de electricidad',
@@ -58,7 +57,7 @@ const InteractiveProjectView: React.FC<InteractiveProjectViewProps> = ({ user })
         details: 'El LED es como una bombillita especial que solo se enciende cuando la electricidad pasa en la dirección correcta. La resistencia es como un obstáculo que hace que la electricidad vaya más despacio para que el LED no se queme.',
         multimedia: {
           type: 'image',
-          url: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=300&fit=crop'
+          url: '/images/steps/componentes.jpg'
         },
         safety: 'Maneja todos los componentes con cuidado y mantén tus manos secas.',
         alternatives: 'Si no tienes kit, puedes usar el simulador Tinkercad para practicar virtualmente.'

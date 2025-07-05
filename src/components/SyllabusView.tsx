@@ -21,7 +21,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Motor', 
       icon: '⚙️', 
       description: 'Control de movimiento',
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=400&fit=crop',
+      image: '/images/components/motor.jpg',
       specs: 'Motor DC de 6V, 100 RPM, bajo consumo de energía',
       purpose: 'El motor DC convierte energía eléctrica en movimiento rotatorio. Es perfecto para crear bombas de agua, ventiladores y sistemas de movimiento en proyectos agrícolas.',
       usage: 'Conecta el terminal positivo (+) al polo positivo de la batería y el negativo (-) al negativo. Siempre verifica la polaridad antes de conectar.',
@@ -42,7 +42,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Transistores BC548/BC558', 
       icon: '🔌', 
       description: 'Amplificación de señales',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      image: '/images/components/transistores.jpg',
       specs: 'BC548 (NPN) y BC558 (PNP), corriente máxima 100mA, voltaje 45V',
       purpose: 'Los transistores amplifican señales eléctricas pequeñas para controlar cargas mayores. Son como interruptores controlados electrónicamente.',
       usage: 'El BC548 tiene tres patitas: colector, base y emisor. Una pequeña corriente en la base controla una corriente mayor entre colector y emisor.',
@@ -63,7 +63,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Resistores (100Ω-10kΩ)', 
       icon: '⚡', 
       description: 'Control de corriente',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      image: '/images/components/resistores.jpg',
       specs: 'Valores disponibles: 100Ω, 470Ω, 1kΩ, 10kΩ - Potencia 1/4W',
       purpose: 'Las resistencias limitan el flujo de corriente eléctrica, protegiendo otros componentes y controlando la cantidad de electricidad que pasa por el circuito.',
       usage: 'Los colores en la resistencia indican su valor. Lee de izquierda a derecha: primer color-segundo color-multiplicador.',
@@ -84,7 +84,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Fotoresistor', 
       icon: '💡', 
       description: 'Sensor de luz',
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=400&fit=crop',
+      image: '/images/components/fotoresistor.jpg',
       specs: 'Rango de resistencia: 1kΩ (luz directa) a 10MΩ (oscuridad total)',
       purpose: 'El fotoresistor cambia su resistencia según la cantidad de luz que recibe. A más luz, menor resistencia, y viceversa.',
       usage: 'Se conecta como una resistencia normal, pero su valor cambia con la luz. Úsalo con un divisor de voltaje para crear un sensor.',
@@ -105,7 +105,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Switch y Pulsadores', 
       icon: '🔘', 
       description: 'Control manual',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      image: '/images/components/switches.jpg',
       specs: 'Switch SPDT 250V AC/3A, Pulsadores normalmente abiertos 12V DC',
       purpose: 'Los switches mantienen una posición (encendido/apagado), mientras que los pulsadores solo actúan mientras se presionan.',
       usage: 'El switch tiene 3 terminales: común, normalmente abierto y normalmente cerrado. Los pulsadores tienen 2 terminales.',
@@ -126,7 +126,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'LED y Lámpara', 
       icon: '💡', 
       description: 'Indicadores luminosos',
-      image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=400&fit=crop',
+      image: '/images/components/led.jpg',
       specs: 'LED: 2-3V, 20mA | Lámpara: 6V, 0.5W con rosca pequeña',
       purpose: 'Los LEDs y lámparas convierten electricidad en luz. Los LEDs consumen menos energía y duran más tiempo.',
       usage: 'Los LEDs tienen polaridad: la patita larga es positiva (+). Siempre usa una resistencia limitadora con LEDs.',
@@ -147,7 +147,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Capacitores', 
       icon: '🔋', 
       description: 'Almacenamiento de energía',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      image: '/images/components/capacitores.jpg',
       specs: 'Cerámico 104 (0.1µF), Electrolíticos 470µF y 1000µF/16V',
       purpose: 'Los capacitores almacenan energía eléctrica temporalmente y la liberan cuando es necesario. También filtran el ruido eléctrico.',
       usage: 'Los capacitores electrolíticos tienen polaridad (+ y -). Los cerámicos no tienen polaridad.',
@@ -168,7 +168,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
       name: 'Potenciómetro 100k', 
       icon: '🎛️', 
       description: 'Control variable',
-      image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=400&fit=crop',
+      image: '/images/components/potenciometro.jpg',
       specs: 'Potenciómetro lineal de 100kΩ con 3 terminales',
       purpose: 'El potenciómetro es una resistencia variable que permite ajustar valores girando un eje. Es como un control de volumen.',
       usage: 'Tiene 3 terminales: dos extremos (resistencia total) y uno central (cursor móvil). El valor entre extremo y centro varía al girar.',
@@ -205,7 +205,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Sistema de Alerta Temprana para Granizo',
               description: 'Construye un detector de luz que alerte a los agricultores sobre cambios climáticos repentinos usando un fotoresistor y LED.',
-              image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&h=300&fit=crop',
+              image: '/images/projects/alerta-granizo.jpg',
               materials: ['Fotoresistor', 'LED', 'Resistores', 'Switch'],
               ruralFocus: 'Protección de cultivos contra granizo',
               duration: '45 minutos',
@@ -220,7 +220,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Medidor de Humedad para Invernaderos',
               description: 'Crea un sistema simple que indique cuando las plantas necesitan agua, usando resistencias como sensores.',
-              image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop',
+              image: '/images/projects/medidor-humedad.jpg',
               materials: ['Resistores', 'LED', 'Potenciómetro', 'Pulsadores'],
               ruralFocus: 'Optimización del riego en agricultura',
               duration: '50 minutos',
@@ -240,7 +240,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Bomba de Agua Automática para Riego',
               description: 'Sistema que activa una bomba cuando detecta baja humedad, usando transistores como amplificadores.',
-              image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=300&fit=crop',
+              image: '/images/projects/bomba-agua.jpg',
               materials: ['Motor', 'Transistores', 'Fotoresistor', 'Capacitores', 'Resistores'],
               ruralFocus: 'Automatización del riego agrícola',
               duration: '60 minutos',
@@ -255,7 +255,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Ventilador Solar para Secado de Granos',
               description: 'Motor que se activa con luz solar para secar granos de quinua o cebada, usando fotoresistor y transistores.',
-              image: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=300&fit=crop',
+              image: '/images/projects/ventilador-solar.jpg',
               materials: ['Motor', 'Fotoresistor', 'Transistores', 'Switch', 'Resistores'],
               ruralFocus: 'Procesamiento de productos agrícolas',
               duration: '55 minutos',
@@ -275,7 +275,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Detector de Metales para Minería Artesanal',
               description: 'Sistema básico que detecta objetos metálicos usando oscilaciones electromagnéticas con transistores.',
-              image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=300&fit=crop',
+              image: '/images/projects/detector-metales.jpg',
               materials: ['Transistores', 'Resistores', 'Capacitores', 'LED', 'Potenciómetro'],
               ruralFocus: 'Herramientas para minería responsable',
               duration: '50 minutos',
@@ -290,7 +290,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Iluminación LED para Gallineros',
               description: 'Sistema de iluminación automática que mejora la producción de huevos usando LEDs y control por horario.',
-              image: 'https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?w=400&h=300&fit=crop',
+              image: '/images/projects/iluminacion-gallinero.jpg',
               materials: ['LED', 'Resistores', 'Switch', 'Transistores', 'Fotoresistor'],
               ruralFocus: 'Mejora de la producción avícola',
               duration: '45 minutos',
@@ -305,7 +305,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Medidor de pH para Suelos Agrícolas',
               description: 'Dispositivo que ayuda a determinar la acidez del suelo usando resistencias variables y LEDs indicadores.',
-              image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?w=400&h=300&fit=crop',
+              image: '/images/projects/medidor-ph.jpg',
               materials: ['Resistores', 'LED', 'Potenciómetro', 'Pulsadores', 'Capacitores'],
               ruralFocus: 'Análisis de calidad del suelo',
               duration: '55 minutos',
@@ -320,7 +320,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Alarma de Seguridad para Almacenes',
               description: 'Sistema de alerta para proteger almacenes de granos usando sensores y sirenas.',
-              image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop',
+              image: '/images/projects/alarma-seguridad.jpg',
               materials: ['Fotoresistor', 'Transistores', 'LED', 'Resistores', 'Pulsadores'],
               ruralFocus: 'Seguridad en almacenamiento agrícola',
               duration: '50 minutos',
@@ -335,7 +335,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Cargador Solar para Dispositivos',
               description: 'Sistema de carga que aprovecha la energía solar para cargar dispositivos móviles en zonas rurales.',
-              image: 'https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=300&fit=crop',
+              image: '/images/projects/cargador-solar.jpg',
               materials: ['Fotoresistor', 'Capacitores', 'Resistores', 'LED', 'Switch'],
               ruralFocus: 'Energía renovable en comunidades rurales',
               duration: '60 minutos',
@@ -350,7 +350,7 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             project: {
               name: 'Sistema de Monitoreo de Ganado',
               description: 'Dispositivo que monitorea el movimiento del ganado usando sensores y alertas remotas.',
-              image: 'https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?w=400&h=300&fit=crop',
+              image: '/images/projects/monitoreo-ganado.jpg',
               materials: ['Motor', 'Fotoresistor', 'Transistores', 'LED', 'Pulsadores', 'Resistores'],
               ruralFocus: 'Gestión inteligente de ganadería',
               duration: '75 minutos',
@@ -379,7 +379,6 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
         </Badge>
       </div>
 
-      {/* Kit Disponible - Ahora clickeable */}
       <Card className="bg-blue-50 border-blue-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-yatina-text">
@@ -412,14 +411,12 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
         </CardContent>
       </Card>
 
-      {/* Modal para detalles del componente */}
       <KitComponentModal 
         component={selectedComponent}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
 
-      {/* Temario y Proyectos */}
       <div className="space-y-6">
         <h3 className="text-xl font-montserrat font-semibold text-yatina-text">
           Temario y Proyectos Asignados
@@ -430,7 +427,6 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
             <Card key={topic.id} className="hover:shadow-lg transition-shadow">
               <CardContent className="p-0">
                 <div className="grid md:grid-cols-3 gap-0">
-                  {/* Imagen del proyecto */}
                   <div className="relative">
                     <img 
                       src={topic.project.image} 
@@ -444,7 +440,6 @@ const SyllabusView: React.FC<SyllabusViewProps> = ({ grade, trimester, onSelectP
                     </div>
                   </div>
                   
-                  {/* Contenido */}
                   <div className="md:col-span-2 p-6">
                     <div className="flex items-start gap-4">
                       <div className="w-12 h-12 bg-yatina-blue/10 rounded-full flex items-center justify-center flex-shrink-0">
