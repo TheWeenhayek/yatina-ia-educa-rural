@@ -3,7 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Clock, Users, AlertTriangle, Lightbulb, Play, Edit, Check, ArrowLeft, MapPin } from 'lucide-react';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Clock, Users, AlertTriangle, Lightbulb, Play, Edit, Check, ArrowLeft, MapPin, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface LessonPlanProps {
   project: any;
@@ -14,6 +15,15 @@ interface LessonPlanProps {
 const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClass, onBack }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedPlan, setEditedPlan] = useState(null);
+  const [expandedSteps, setExpandedSteps] = useState<{ [key: string]: boolean }>({});
+
+  const toggleStep = (activityIndex: number, stepIndex: number) => {
+    const key = `${activityIndex}-${stepIndex}`;
+    setExpandedSteps(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
   // Materiales del kit con imágenes locales y descripciones detalladas
   const kitMaterials = {
@@ -157,6 +167,44 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
         materials: ['Baterías', 'Multímetro (si disponible)'],
         safetyNotes: 'Desconectar fuentes de alimentación al finalizar, guardar componentes ordenadamente',
         image: '/images/rural/reflexion.jpg'
+      },
+      {
+        time: 'Final',
+        activity: 'Aplicaciones en Contexto Rural',
+        description: 'Ejemplos motivacionales de cómo aplicar este proyecto en su vida cotidiana rural',
+        materials: ['Experiencias locales', 'Casos de éxito'],
+        safetyNotes: 'Fomentar la creatividad y adaptación local responsable',
+        image: '/images/rural/aplicaciones.jpg',
+        ruralExamples: [
+          {
+            title: 'Señalización para Maquinaria Agrícola',
+            description: 'Instalar LEDs en tractores y cosechadoras para trabajo nocturno seguro',
+            benefit: 'Reduce accidentes en un 40% durante faenas nocturnas',
+            materials: ['LEDs de alta luminosidad', 'Baterías de 12V', 'Interruptores resistentes'],
+            implementation: 'Conectar LEDs rojos en la parte trasera y blancos en la delantera de la maquinaria'
+          },
+          {
+            title: 'Iluminación de Establos y Corrales',
+            description: 'Sistema de LEDs para ordeño matutino sin electricidad comercial',
+            benefit: 'Mejora productividad lechera al facilitar trabajo temprano',
+            materials: ['Tiras de LEDs', 'Batería solar', 'Temporizador básico'],
+            implementation: 'Instalar LEDs con sensor de movimiento para activación automática'
+          },
+          {
+            title: 'Detectores para Minería Artesanal',
+            description: 'Circuitos simples para detectar presencia de metales en vetas superficiales',
+            benefit: 'Herramienta económica para prospección inicial responsable',
+            materials: ['Bobinas de cobre', 'LEDs indicadores', 'Amplificador simple'],
+            implementation: 'Crear detector básico que encienda LED al detectar cambios electromagnéticos'
+          },
+          {
+            title: 'Monitoreo de Sistemas de Riego',
+            description: 'LEDs indicadores para estado de bombas y válvulas de riego',
+            benefit: 'Permite supervisión visual del sistema desde la distancia',
+            materials: ['LEDs verdes y rojos', 'Sensores de flujo', 'Cables resistentes'],
+            implementation: 'LED verde para funcionamiento normal, rojo para alertas o fallas'
+          }
+        ]
       }
     ],
     materials: (project.materials || ['LED', 'Resistores', 'Switch']).map((material: string, index: number) => ({
@@ -345,36 +393,145 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                               Pasos Detallados de Construcción
                             </h5>
                             <div className="space-y-4">
-                              {activity.detailedSteps.map((step: any, stepIndex: number) => (
-                                <div key={stepIndex} className="bg-white p-3 rounded border-l-4 border-yatina-orange">
-                                  <div className="grid md:grid-cols-4 gap-3">
-                                    <div>
-                                      <img 
-                                        src={step.image} 
-                                        alt={`Paso ${step.step}`}
-                                        className="w-full h-20 object-cover rounded"
-                                      />
+                              {activity.detailedSteps.map((step: any, stepIndex: number) => {
+                                const stepKey = `${index}-${stepIndex}`;
+                                const isExpanded = expandedSteps[stepKey];
+                                
+                                return (
+                                  <Collapsible key={stepIndex} open={isExpanded} onOpenChange={() => toggleStep(index, stepIndex)}>
+                                    <div className="bg-white border-l-4 border-yatina-orange rounded">
+                                      <CollapsibleTrigger className="w-full p-3 text-left hover:bg-gray-50 transition-colors">
+                                        <div className="flex items-center justify-between">
+                                          <div className="flex items-center gap-2">
+                                            <Badge className="bg-yatina-orange text-white text-xs">
+                                              Paso {step.step}
+                                            </Badge>
+                                            <span className="font-medium text-sm">{step.title}</span>
+                                          </div>
+                                          {isExpanded ? (
+                                            <ChevronUp className="w-4 h-4 text-gray-500" />
+                                          ) : (
+                                            <ChevronDown className="w-4 h-4 text-gray-500" />
+                                          )}
+                                        </div>
+                                        {!isExpanded && (
+                                          <p className="text-xs text-gray-600 mt-1 pr-8">
+                                            {step.description}
+                                          </p>
+                                        )}
+                                      </CollapsibleTrigger>
+                                      
+                                      <CollapsibleContent>
+                                        <div className="p-3 pt-0 border-t border-gray-100">
+                                          <div className="grid md:grid-cols-3 gap-4">
+                                            <div className="md:col-span-1">
+                                              <img 
+                                                src={step.image} 
+                                                alt={`Paso ${step.step} - ${step.title}`}
+                                                className="w-full h-40 object-cover rounded-lg shadow-sm"
+                                                loading="lazy"
+                                              />
+                                            </div>
+                                            <div className="md:col-span-2 space-y-3">
+                                              <div>
+                                                <h6 className="font-medium text-yatina-text mb-2">Descripción detallada:</h6>
+                                                <p className="text-sm text-gray-700">{step.description}</p>
+                                              </div>
+                                              
+                                              <div>
+                                                <h6 className="font-medium text-yatina-text mb-1">Materiales necesarios:</h6>
+                                                <div className="flex flex-wrap gap-1">
+                                                  {step.materials.map((material: string, matIndex: number) => (
+                                                    <Badge key={matIndex} variant="outline" className="text-xs">
+                                                      {material}
+                                                    </Badge>
+                                                  ))}
+                                                </div>
+                                              </div>
+                                              
+                                              <div className="bg-red-50 p-3 rounded-lg">
+                                                <div className="flex items-start gap-2">
+                                                  <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                                                  <div>
+                                                    <h6 className="font-medium text-red-700 text-sm">Advertencia de Seguridad:</h6>
+                                                    <p className="text-sm text-red-600 mt-1">{step.safety}</p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </CollapsibleContent>
                                     </div>
-                                    <div className="md:col-span-3">
-                                      <div className="flex items-center gap-2 mb-1">
-                                        <Badge className="bg-yatina-orange text-white text-xs">
-                                          Paso {step.step}
-                                        </Badge>
-                                        <span className="font-medium text-sm">{step.title}</span>
+                                  </Collapsible>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+
+                        {activity.ruralExamples && (
+                          <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                            <h5 className="font-semibold text-yatina-text mb-3 flex items-center gap-2">
+                              <MapPin className="w-4 h-4 text-green-600" />
+                              Aplicaciones en Contexto Rural
+                            </h5>
+                            <p className="text-sm text-gray-700 mb-4">
+                              Ejemplos motivacionales para mostrar a los estudiantes cómo pueden aplicar 
+                              este proyecto en su vida cotidiana rural:
+                            </p>
+                            
+                            <div className="grid gap-4">
+                              {activity.ruralExamples.map((example: any, exampleIndex: number) => (
+                                <div key={exampleIndex} className="bg-white p-4 rounded-lg border border-green-200">
+                                  <div className="flex items-start gap-3">
+                                    <div className="w-8 h-8 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                                      {exampleIndex + 1}
+                                    </div>
+                                    <div className="flex-1">
+                                      <h6 className="font-semibold text-yatina-text mb-2">{example.title}</h6>
+                                      <p className="text-sm text-gray-700 mb-2">{example.description}</p>
+                                      
+                                      <div className="grid md:grid-cols-2 gap-3 text-xs">
+                                        <div className="bg-blue-50 p-2 rounded">
+                                          <span className="font-medium text-blue-700">💡 Beneficio: </span>
+                                          <span className="text-blue-600">{example.benefit}</span>
+                                        </div>
+                                        <div className="bg-gray-50 p-2 rounded">
+                                          <span className="font-medium text-gray-700">🔧 Materiales: </span>
+                                          <span className="text-gray-600">{example.materials.join(', ')}</span>
+                                        </div>
                                       </div>
-                                      <p className="text-xs text-gray-700 mb-2">{step.description}</p>
-                                      <p className="text-xs text-gray-600 mb-1">
-                                        <span className="font-medium">Materiales: </span>
-                                        {step.materials.join(', ')}
-                                      </p>
-                                      <div className="flex items-center gap-1 text-xs text-red-600">
-                                        <AlertTriangle className="w-3 h-3" />
-                                        {step.safety}
+                                      
+                                      <div className="mt-2 p-2 bg-orange-50 rounded">
+                                        <span className="font-medium text-orange-700 text-xs">📋 Implementación: </span>
+                                        <span className="text-orange-600 text-xs">{example.implementation}</span>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               ))}
+                            </div>
+                            
+                            <div className="mt-4 p-3 bg-yatina-orange/10 rounded-lg">
+                              <h6 className="font-semibold text-yatina-text mb-2 flex items-center gap-2">
+                                <Lightbulb className="w-4 h-4 text-yatina-orange" />
+                                Preguntas para motivar a los estudiantes:
+                              </h6>
+                              <ul className="space-y-1 text-sm text-gray-700">
+                                <li className="flex items-start gap-2">
+                                  <span className="text-yatina-orange">•</span>
+                                  "¿En qué actividades de tu familia podrían usar este proyecto?"
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-yatina-orange">•</span>
+                                  "¿Cómo mejoraría esto el trabajo en tu comunidad?"
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-yatina-orange">•</span>
+                                  "¿Qué otros usos se te ocurren para este circuito?"
+                                </li>
+                              </ul>
                             </div>
                           </div>
                         )}
@@ -384,6 +541,7 @@ const DetailedLessonPlan: React.FC<LessonPlanProps> = ({ project, onAssignToClas
                           src={activity.image} 
                           alt={activity.activity}
                           className="w-full h-32 object-cover rounded-lg"
+                          loading="lazy"
                         />
                       </div>
                     </div>
